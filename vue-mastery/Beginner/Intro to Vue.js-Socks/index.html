@@ -1,14 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Prodduct App</title>
-  </head>
-  <body>
+    <title>Product App</title>
+    <link rel="stylesheet" type="text/css" href="style.css" </head>
+
+<body>
+    <div class="nav-bar"></div>
+
     <div id="app">
-      <h1>{{ product }}</h1>
+        <div class="product-image">
+            <!-- binds an attribute to an expression shortcut is :src="image" -->
+            <img v-bind:src="image" />
+        </div>
+        <div class="product-info">
+            <h1>{{ product }}</h1>
+            <!-- v-if conditional rendering add and remove element, v-show doesn't remove from the DOM-->
+            <p v-if="inventory > 10">In Stock</p>
+            <p v-else-if="inventory<=10 && inventory>2">Almost out of stock</p>
+            <p v-else>Out of Stock</p>
+            <ul>
+                <li v-for="detail in details">{{detail}}</li>
+            </ul>
+            <div v-for="variant in variants" :key="variant.variantId">
+                <!-- v-on shortcut is @ -->
+                <p @mouseover="updateProduct(variant.variantImage)">{{variant.variantColor}}</p>
+            </div>
+            <button v-on:click="addToCart">Add to Cart</button>
+            <div class="cart">
+                <p>Cart({{cart}})</p>
+            </div>
+        </div>
     </div>
-  </body>
-  <script src="main.js"></script>
+    </div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="main.js"></script>
+
 </html>
