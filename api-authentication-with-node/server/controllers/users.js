@@ -1,4 +1,18 @@
+const JWT = require('jsonwebtoken')
 const User = require('../models/user')
+const {JWT_SECRET} = require('../configuration')
+
+signToken = (user) => {
+  return JWT.sign(
+    {
+      iss: 'CodeWorkr', //issuer
+      sub: user.id, //unique identifier of the payload
+      iat: new Date().getTime(), // issue at claim
+      exp: new Date().setDate(new Date().getDate() + 1) // expiry current time + 1 day
+    },
+    JWT_SECRET
+  )
+}
 
 module.exports = {
   signUp: async (req, res, next) => {
@@ -17,13 +31,21 @@ module.exports = {
     })
     await newUser.save()
 
-    // Respond with token
+    // Generate the token
 
-    res.json({user: 'created'})
+    const token = signToken(newUser)
+
+    // Respond with token
+    res.status(200).json({token})
   },
 
   signIn: async (req, res, next) => {
+    console.log('signin was called')
     // Generate token
   },
-  secret: async (req, res, next) => {}
+
+  secret: async (req, res, next) => {
+    console.log('I managed to get to controller secret')
+    res.json({secret: 'resource'})
+  }
 }
