@@ -40,8 +40,11 @@ module.exports = {
   },
 
   signIn: async (req, res, next) => {
-    console.log('signin was called')
+    console.log('Successful login')
     // Generate token
+
+    const token = signToken(req.user) // req.user created by passport
+    res.status(200).json(token)
   },
 
   secret: async (req, res, next) => {

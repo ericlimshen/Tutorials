@@ -5,7 +5,8 @@ const mongoose = require('mongoose')
 
 mongoose.connect('mongodb://localhost/APIAuthentication', {
   useUnifiedTopology: true,
-  useNewUrlParser: true
+  useNewUrlParser: true,
+  useCreateIndex: true
 })
 //mongoose.connect('mongodb://localhost/APIAuthentication')
 const app = express()
